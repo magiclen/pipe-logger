@@ -283,52 +283,56 @@ pub fn run(config: Config) -> Result<i32, String> {
 
     let file_name_without_extension = Path::new(&file_path).file_stem().unwrap().to_str().unwrap();
 
-    let mut rotated_log_file_names = Vec::new();
+    let mut rotated_log_file_names = {
+        let mut rotated_log_file_names = Vec::new();
 
-    let re = Regex::new("^-[1-2][0-9]{3}(-[0-5][0-9]){5}-[0-9]{3}$").unwrap(); // -%Y-%m-%d-%H-%M-%S + $.3f
+        let re = Regex::new("^-[1-2][0-9]{3}(-[0-5][0-9]){5}-[0-9]{3}$").unwrap(); // -%Y-%m-%d-%H-%M-%S + $.3f
 
-    for entry in file_parent.read_dir().unwrap().filter_map(|entry| entry.ok()) {
-        let rotated_log_file_path = entry.path();
+        for entry in file_parent.read_dir().unwrap().filter_map(|entry| entry.ok()) {
+            let rotated_log_file_path = entry.path();
 
-        if !rotated_log_file_path.is_file() {
-            continue;
-        }
-
-        let rotated_log_file_name = Path::new(&rotated_log_file_path).file_name().unwrap().to_str().unwrap();
-
-        if !rotated_log_file_name.starts_with(file_name_without_extension) {
-            continue;
-        }
-
-        let rotated_log_file_name_point_index = match rotated_log_file_name.rfind(".") {
-            Some(index) => {
-                index
+            if !rotated_log_file_path.is_file() {
+                continue;
             }
-            None => {
-                rotated_log_file_name.len()
+
+            let rotated_log_file_name = Path::new(&rotated_log_file_path).file_name().unwrap().to_str().unwrap();
+
+            if !rotated_log_file_name.starts_with(file_name_without_extension) {
+                continue;
             }
-        };
 
-        if rotated_log_file_name_point_index < file_name_point_index + 24 { // -%Y-%m-%d-%H-%M-%S + $.3f
-            continue;
+            let rotated_log_file_name_point_index = match rotated_log_file_name.rfind(".") {
+                Some(index) => {
+                    index
+                }
+                None => {
+                    rotated_log_file_name.len()
+                }
+            };
+
+            if rotated_log_file_name_point_index < file_name_point_index + 24 { // -%Y-%m-%d-%H-%M-%S + $.3f
+                continue;
+            }
+
+            let file_name_without_extension_len = file_name_without_extension.len();
+
+            if !re.is_match(&rotated_log_file_name[file_name_without_extension_len..file_name_without_extension_len + 24]) {  // -%Y-%m-%d-%H-%M-%S + $.3f
+                continue;
+            }
+
+            let ext = &rotated_log_file_name[rotated_log_file_name_point_index..];
+
+            if ext.eq(&file_name[file_name_point_index..]) {
+                rotated_log_file_names.push(rotated_log_file_name.to_string());
+            } else if ext.eq(".xz") && rotated_log_file_name[..rotated_log_file_name_point_index].ends_with(&file_name[file_name_point_index..]) {
+                rotated_log_file_names.push(rotated_log_file_name[..rotated_log_file_name_point_index].to_string());
+            }
         }
 
-        let file_name_without_extension_len = file_name_without_extension.len();
+        rotated_log_file_names.sort();
 
-        if !re.is_match(&rotated_log_file_name[file_name_without_extension_len..file_name_without_extension_len + 24]) {  // -%Y-%m-%d-%H-%M-%S + $.3f
-            continue;
-        }
-
-        let ext = &rotated_log_file_name[rotated_log_file_name_point_index..];
-
-        if ext.eq(&file_name[file_name_point_index..]) {
-            rotated_log_file_names.push(rotated_log_file_name.to_string());
-        } else if ext.eq(".xz") && rotated_log_file_name[..rotated_log_file_name_point_index].ends_with(&file_name[file_name_point_index..]) {
-            rotated_log_file_names.push(rotated_log_file_name[..rotated_log_file_name_point_index].to_string());
-        }
-    }
-
-    rotated_log_file_names.sort();
+        rotated_log_file_names
+    };
 
     let mut file = match OpenOptions::new()
         .create(true)
