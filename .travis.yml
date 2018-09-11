@@ -1,0 +1,14 @@
+language: rust
+
+rust:
+- stable
+- beta
+- nightly
+os:
+- linux
+- osx
+addons:
+  apt:
+    packages:
+    - lzma-dev
+env: LZMA_API_STATIC=1
