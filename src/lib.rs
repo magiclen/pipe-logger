@@ -96,7 +96,7 @@ impl Config {
             )
             .arg(Arg::with_name("COMPRESS")
                 .long("--compress")
-                .help("Compresses the rotated log files. (Not support yet.)")
+                .help("Compresses the rotated log files.")
             )
             .arg(Arg::with_name("ERR")
                 .long("--err")

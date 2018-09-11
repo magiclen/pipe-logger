@@ -22,7 +22,7 @@ USAGE:
     pipe-logger [FLAGS] [OPTIONS] <LOG_PATH>
 
 FLAGS:
-        --compress    Compresses the rotated log files. (Not support yet.)
+        --compress    Compresses the rotated log files.
         --err         Re-outputs logs through stderr.
     -h, --help        Prints help information
     -V, --version     Prints version information
