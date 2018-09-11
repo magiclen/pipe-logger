@@ -12,6 +12,7 @@ license = "MIT"
 
 [badges]
 travis-ci = { repository = "magiclen/pipe-logger", branch = "master" }
+appveyor = { repository = "magiclen/pipe-logger", branch = "master", service = "github" }
 
 [profile.release]
 panic = "abort"

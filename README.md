@@ -2,6 +2,7 @@ Pipe Logger
 ====================
 
 [![Build Status](https://travis-ci.org/magiclen/pipe-logger.svg?branch=master)](https://travis-ci.org/magiclen/pipe-logger)
+[![Build status](https://ci.appveyor.com/api/projects/status/0cbjcbj643pj78jc/branch/master?svg=true)](https://ci.appveyor.com/project/magiclen/pipe-logger/branch/master)
 
 Stores, rotates, compresses process logs.
 
