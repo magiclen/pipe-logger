@@ -5,11 +5,11 @@ use std::process;
 use pipe_logger::*;
 
 fn main() {
-    let config = Config::from_cli();
+    let logger = from_cli();
 
-    match config {
-        Ok(config) => {
-            match run(config) {
+    match logger {
+        Ok(logger) => {
+            match run(logger) {
                 Ok(es) => {
                     process::exit(es);
                 }
