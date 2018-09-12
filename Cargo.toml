@@ -1,6 +1,6 @@
 [package]
 name = "pipe-logger"
-version = "1.1.0"
+version = "1.1.1"
 authors = ["Magic Len <len@magiclen.org>"]
 repository = "https://github.com/magiclen/pipe-logger"
 homepage = "https://magiclen.org/pipe-logger"
@@ -19,5 +19,5 @@ panic = "abort"
 
 [dependencies]
 clap = "2.32.0"
-byte-unit = "1.0.2"
-pipe-logger-lib = "1.0.1"
+byte-unit = "1.0.4"
+pipe-logger-lib = "1.0.3"
