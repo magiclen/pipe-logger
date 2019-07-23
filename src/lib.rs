@@ -89,7 +89,7 @@ pub fn from_cli() -> Result<PipeLogger, String> {
     let mut builder = PipeLoggerBuilder::new(log_path);
 
     if let Some(r) = matches.value_of("ROTATE") {
-        match Byte::from_string(r) {
+        match Byte::from_str(r) {
             Ok(byte) => {
                 let b = byte.get_bytes();
                 if b > <u64>::max_value() as u128 {
@@ -99,15 +99,11 @@ pub fn from_cli() -> Result<PipeLogger, String> {
             }
             Err(err) => {
                 match err {
-                    ByteError::ParseError => {
-                        // TODO other methods
-                        return Err("You need to input a file size for log rotation.".to_string());
+                    ByteError::ValueIncorrect(s) => {
+                        return Err(s);
                     }
-                    ByteError::ValueIncorrect => {
-                        return Err("The file size of rotation is incorrect.".to_string());
-                    }
-                    ByteError::UnitIncorrect => {
-                        return Err("The unit of the file size is incorrect.".to_string());
+                    ByteError::UnitIncorrect(s) => {
+                        return Err(s);
                     }
                 }
             }
