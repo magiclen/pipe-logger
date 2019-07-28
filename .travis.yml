@@ -1,14 +1,36 @@
 language: rust
 
 rust:
-- stable
-- beta
-- nightly
+  - stable
+  - beta
+  - nightly
+
 os:
-- linux
-- osx
-addons:
-  apt:
-    packages:
-    - lzma-dev
-env: LZMA_API_STATIC=1
+  - linux
+  - osx
+  - windows
+
+env:
+  -
+  - LZMA_API_STATIC=1
+
+install:
+  - if [ "$TRAVIS_OS_NAME" = "linux" ]; then sudo apt install lzma-dev ; fi
+
+matrix:
+  include:
+    - rust: stable
+      os: linux
+      env: TARGET=x86_64-unknown-linux-musl
+      install: rustup target add $TARGET
+      script: cargo test --target $TARGET
+    - rust: beta
+      os: linux
+      env: TARGET=x86_64-unknown-linux-musl
+      install: rustup target add $TARGET
+      script: cargo test --target $TARGET
+    - rust: nightly
+      os: linux
+      env: TARGET=x86_64-unknown-linux-musl
+      install: rustup target add $TARGET
+      script: cargo test --target $TARGET
