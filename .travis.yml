@@ -15,6 +15,7 @@ env:
   - LZMA_API_STATIC=1
 
 install:
+  - if [ "$TRAVIS_OS_NAME" = "linux" ]; then sudo apt update ; fi
   - if [ "$TRAVIS_OS_NAME" = "linux" ]; then sudo apt install lzma-dev ; fi
 
 matrix:
