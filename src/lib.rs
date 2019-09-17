@@ -1,13 +1,13 @@
 //! # Pipe Logger
 //! Stores, rotates, compresses process logs.
 
-extern crate clap;
 extern crate byte_unit;
+extern crate clap;
 extern crate pipe_logger_lib;
 
 use std::env;
-use std::path::{Path, PathBuf};
 use std::io;
+use std::path::{Path, PathBuf};
 
 use byte_unit::Byte;
 use byte_unit::ByteError;
@@ -30,12 +30,8 @@ pub fn from_cli() -> Result<PipeLogger, String> {
     let default_log_path = {
         let path = Path::new(&arg0);
         match path.parent() {
-            Some(p) => {
-                Path::join(p, DEFAULT_LOG_NAME)
-            }
-            None => {
-                PathBuf::from(DEFAULT_LOG_NAME)
-            }
+            Some(p) => Path::join(p, DEFAULT_LOG_NAME),
+            None => PathBuf::from(DEFAULT_LOG_NAME),
         }
     };
 
@@ -49,37 +45,41 @@ pub fn from_cli() -> Result<PipeLogger, String> {
     let matches = App::new(APP_NAME)
         .version(CARGO_PKG_VERSION)
         .author(CARGO_PKG_AUTHORS)
-        .about(format!("Stores, rotates, compresses process logs.\n\nEXAMPLES:\n{}", examples.iter()
-            .map(|e| format!("  {} {}\n", arg0, e))
-            .collect::<Vec<String>>()
-            .concat()
-        ).as_str()
+        .about(
+            format!(
+                "Stores, rotates, compresses process logs.\n\nEXAMPLES:\n{}",
+                examples
+                    .iter()
+                    .map(|e| format!("  {} {}\n", arg0, e))
+                    .collect::<Vec<String>>()
+                    .concat()
+            )
+            .as_str(),
         )
-        .arg(Arg::with_name("ROTATE")
-            .long("rotate")
-            .short("r")
-            .help("Rotates the log file.")
-            .takes_value(true)
+        .arg(
+            Arg::with_name("ROTATE")
+                .long("rotate")
+                .short("r")
+                .help("Rotates the log file.")
+                .takes_value(true),
         )
-        .arg(Arg::with_name("COUNT")
-            .long("count")
-            .short("c")
-            .help("Assigns the max count of log files.")
-            .takes_value(true)
+        .arg(
+            Arg::with_name("COUNT")
+                .long("count")
+                .short("c")
+                .help("Assigns the max count of log files.")
+                .takes_value(true),
         )
-        .arg(Arg::with_name("COMPRESS")
-            .long("--compress")
-            .help("Compresses the rotated log files.")
+        .arg(
+            Arg::with_name("COMPRESS").long("--compress").help("Compresses the rotated log files."),
         )
-        .arg(Arg::with_name("ERR")
-            .long("--err")
-            .help("Re-outputs logs through stderr.")
-        )
-        .arg(Arg::with_name("LOG_PATH")
-            .required(true)
-            .help("The path that you want to store your logs.")
-            .takes_value(true)
-            .default_value(default_log_path.to_str().unwrap())
+        .arg(Arg::with_name("ERR").long("--err").help("Re-outputs logs through stderr."))
+        .arg(
+            Arg::with_name("LOG_PATH")
+                .required(true)
+                .help("The path that you want to store your logs.")
+                .takes_value(true)
+                .default_value(default_log_path.to_str().unwrap()),
         )
         .after_help("Enjoy it! https://magiclen.org")
         .get_matches();
@@ -92,7 +92,7 @@ pub fn from_cli() -> Result<PipeLogger, String> {
         match Byte::from_str(r) {
             Ok(byte) => {
                 let b = byte.get_bytes();
-                if b > <u64>::max_value() as u128 {
+                if b > u128::from(u64::max_value()) {
                     return Err("The file size of rotation is too large.".to_string());
                 }
                 builder.set_rotate(Some(RotateMethod::FileSize(b as u64)));
@@ -136,16 +136,14 @@ pub fn from_cli() -> Result<PipeLogger, String> {
         Err(err) => {
             match err {
                 PipeLoggerBuilderError::RotateFileSizeTooSmall => {
-                    return Err("The file size of rotation is too small.".to_string());
+                    Err("The file size of rotation is too small.".to_string())
                 }
                 PipeLoggerBuilderError::CountTooSmall => {
-                    return Err("The count of log files is too small.".to_string());
+                    Err("The count of log files is too small.".to_string())
                 }
-                PipeLoggerBuilderError::IOError(err) => {
-                    return Err(err.to_string());
-                }
+                PipeLoggerBuilderError::IOError(err) => Err(err.to_string()),
                 PipeLoggerBuilderError::FileIsDirectory(path) => {
-                    return Err(format!("`{}` is a directory.", path.to_str().unwrap()));
+                    Err(format!("`{}` is a directory.", path.to_str().unwrap()))
                 }
             }
         }
