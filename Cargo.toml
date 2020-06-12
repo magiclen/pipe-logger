@@ -19,7 +19,7 @@ branch = "master"
 panic = "abort"
 
 [dependencies]
-pipe-logger-lib = "1.1.7"
+pipe-logger-lib = "1.1.10"
 
 clap = "2.33.1"
 concat-with = "0.2"
