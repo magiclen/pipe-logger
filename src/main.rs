@@ -9,6 +9,7 @@ extern crate byte_unit;
 
 use std::env;
 use std::io::{self, Write};
+use std::error::Error;
 
 use clap::{App, Arg};
 use terminal_size::terminal_size;
@@ -23,7 +24,7 @@ const CARGO_PKG_AUTHORS: &str = env!("CARGO_PKG_AUTHORS");
 
 const DEFAULT_LOG_NAME: &str = "logfile.log";
 
-fn main() -> Result<(), String> {
+fn main() -> Result<(), Box<dyn Error>> {
     let matches = App::new(APP_NAME)
         .set_term_width( terminal_size().map(|(width, _)| width.0 as usize).unwrap_or(0))
         .version(CARGO_PKG_VERSION)
@@ -67,14 +68,14 @@ fn main() -> Result<(), String> {
     let mut builder = PipeLoggerBuilder::new(log_path);
 
     if let Some(r) = matches.value_of("ROTATE") {
-        let byte = Byte::from_str(r).map_err(|err| err.to_string())?;
+        let byte = Byte::from_str(r)?;
 
         builder.set_rotate(Some(RotateMethod::FileSize(byte.get_bytes())));
 
         builder.set_compress(matches.is_present("COMPRESS"));
 
         if let Some(c) = matches.value_of("COUNT") {
-            builder.set_count(Some(c.parse::<usize>().map_err(|err| err.to_string())?));
+            builder.set_count(Some(c.parse::<usize>()?));
         }
     }
 
@@ -84,20 +85,20 @@ fn main() -> Result<(), String> {
         builder.set_tee(Some(Tee::Stdout));
     }
 
-    let mut logger = builder.build().map_err(|err| err.to_string())?;
+    let mut logger = builder.build()?;
 
     let mut input = String::new();
 
     let stdin = io::stdin();
 
     loop {
-        let c = stdin.read_line(&mut input).map_err(|err| err.to_string())?;
+        let c = stdin.read_line(&mut input)?;
 
         if c == 0 {
             break;
         }
 
-        logger.write_all(&input.as_bytes()[..c]).map_err(|err| err.to_string())?;
+        logger.write_all(&input.as_bytes()[..c])?;
     }
 
     Ok(())

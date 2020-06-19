@@ -1,6 +1,6 @@
 [package]
 name = "pipe-logger"
-version = "1.1.10"
+version = "1.1.11"
 authors = ["Magic Len <len@magiclen.org>"]
 edition = "2018"
 repository = "https://github.com/magiclen/pipe-logger"
@@ -27,4 +27,5 @@ terminal_size = "0.1"
 
 [dependencies.byte-unit]
 version = "3.1"
+features = ["std"]
 default-features = false
