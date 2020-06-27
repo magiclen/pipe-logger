@@ -10,6 +10,7 @@ categories = ["command-line-utilities", "development-tools::debugging"]
 description= "Stores, rotates, compresses process logs."
 readme = "README.md"
 license = "MIT"
+include = ["src/**/*", "Cargo.toml"]
 
 [badges.travis-ci]
 repository = "magiclen/pipe-logger"

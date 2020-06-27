@@ -8,8 +8,8 @@ extern crate pipe_logger_lib;
 extern crate byte_unit;
 
 use std::env;
-use std::io::{self, Write};
 use std::error::Error;
+use std::io::{self, Write};
 
 use clap::{App, Arg};
 use terminal_size::terminal_size;
