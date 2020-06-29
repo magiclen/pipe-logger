@@ -27,6 +27,6 @@ concat-with = "0.2"
 terminal_size = "0.1"
 
 [dependencies.byte-unit]
-version = "3.1"
+version = "4"
 features = ["std"]
 default-features = false
