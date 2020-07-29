@@ -1,22 +1,24 @@
 [package]
 name = "pipe-logger"
-version = "1.1.11"
+version = "1.1.12"
 authors = ["Magic Len <len@magiclen.org>"]
 edition = "2018"
 repository = "https://github.com/magiclen/pipe-logger"
 homepage = "https://magiclen.org/pipe-logger"
 keywords = ["logger", "log", "pipe", "rotation", "logrotate"]
 categories = ["command-line-utilities", "development-tools::debugging"]
-description= "Stores, rotates, compresses process logs."
+description = "Stores, rotates, compresses process logs."
 readme = "README.md"
 license = "MIT"
-include = ["src/**/*", "Cargo.toml"]
+include = ["src/**/*", "Cargo.toml", "README.md", "LICENSE"]
 
 [badges.travis-ci]
 repository = "magiclen/pipe-logger"
 branch = "master"
 
 [profile.release]
+lto = true
+codegen-units = 1
 panic = "abort"
 
 [dependencies]
