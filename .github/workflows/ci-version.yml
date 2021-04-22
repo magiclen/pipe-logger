@@ -27,7 +27,7 @@ jobs:
       - name: Install lzma
         run: |
           sudo apt update
-          sudo apt install lzma-dev
+          sudo apt install lzma-dev musl-tools
       - uses: actions/checkout@v2
       - uses: actions-rs/toolchain@v1
         with:
