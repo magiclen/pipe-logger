@@ -1,7 +1,7 @@
 Pipe Logger
 ====================
 
-[![Build Status](https://travis-ci.org/magiclen/pipe-logger.svg?branch=master)](https://travis-ci.org/magiclen/pipe-logger)
+[![CI](https://github.com/magiclen/pipe-logger/actions/workflows/ci.yml/badge.svg)](https://github.com/magiclen/pipe-logger/actions/workflows/ci.yml)
 
 Stores, rotates, compresses process logs.
 
