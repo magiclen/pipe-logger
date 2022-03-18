@@ -1,17 +1,19 @@
-all: ./target/x86_64-unknown-linux-musl/release/pipe-logger
+EXECUTABLE_NAME := pipe-logger
 
-./target/x86_64-unknown-linux-musl/release/pipe-logger: $(shell find . -type f -iname '*.rs' -o -name 'Cargo.toml' | sed 's/ /\\ /g')
+all: ./target/x86_64-unknown-linux-musl/release/$(EXECUTABLE_NAME)
+
+./target/x86_64-unknown-linux-musl/release/$(EXECUTABLE_NAME): $(shell find . -type f -iname '*.rs' -o -name 'Cargo.toml' | sed 's/ /\\ /g')
 	LZMA_API_STATIC=1 cargo build --release --target x86_64-unknown-linux-musl
-	strip ./target/x86_64-unknown-linux-musl/release/pipe-logger
+	strip ./target/x86_64-unknown-linux-musl/release/$(EXECUTABLE_NAME)
 	
 install:
 	$(MAKE)
-	sudo cp ./target/x86_64-unknown-linux-musl/release/pipe-logger /usr/local/bin/pipe-logger
-	sudo chown root. /usr/local/bin/pipe-logger
-	sudo chmod 0755 /usr/local/bin/pipe-logger
+	sudo cp ./target/x86_64-unknown-linux-musl/release/$(EXECUTABLE_NAME) /usr/local/bin/$(EXECUTABLE_NAME)
+	sudo chown root. /usr/local/bin/$(EXECUTABLE_NAME)
+	sudo chmod 0755 /usr/local/bin/$(EXECUTABLE_NAME)
 
 uninstall:
-	sudo rm /usr/local/bin/pipe-logger
+	sudo rm /usr/local/bin/$(EXECUTABLE_NAME)
 
 test:
 	cargo test --verbose

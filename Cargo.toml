@@ -1,8 +1,8 @@
 [package]
 name = "pipe-logger"
-version = "1.1.13"
+version = "1.1.14"
 authors = ["Magic Len <len@magiclen.org>"]
-edition = "2018"
+edition = "2021"
 repository = "https://github.com/magiclen/pipe-logger"
 homepage = "https://magiclen.org/pipe-logger"
 keywords = ["logger", "log", "pipe", "rotation", "logrotate"]
@@ -18,9 +18,9 @@ codegen-units = 1
 panic = "abort"
 
 [dependencies]
-pipe-logger-lib = "1.1.10"
+pipe-logger-lib = "1.1.14"
 
-clap = "2.33.1"
+clap = "3.1.6"
 concat-with = "0.2"
 terminal_size = "0.1"
 

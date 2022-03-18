@@ -9,29 +9,24 @@ Stores, rotates, compresses process logs.
 
 ```
 EXAMPLES:
-  pipe-logger /path/to/out.log                        # Stores log into /path/to/out.log
-  pipe-logger /path/to/out.log -r 10M                 # The same as above, plus if its size is over than 10MB, it will
-be rotated and renamed.
-  pipe-logger /path/to/out.log -r 10M -c 4            # The same as above, plus the max count of log files is 4. The
-oldest ones will be removed when the quota is exhausted.
-  pipe-logger /path/to/out.log -r 10M -c 4 --compress # The same as above, plus the rotated log files are compressed by
-xz.
+pipe-logger /path/to/out.log                        # Store log into /path/to/out.log
+pipe-logger /path/to/out.log -r 10M                 # The same as above, plus if its size is over than 10MB, it will be rotated and renamed.
+pipe-logger /path/to/out.log -r 10M -c 4            # The same as above, plus the max count of log files is 4. The oldest ones will be removed when the quota is exhausted.
+pipe-logger /path/to/out.log -r 10M -c 4 --compress # The same as above, plus the rotated log files are compressed by xz.
 
 USAGE:
-    pipe-logger [FLAGS] [OPTIONS] <LOG_PATH>
-
-FLAGS:
-        --compress    Compresses the rotated log files.
-        --err         Re-outputs logs through stderr.
-    -h, --help        Prints help information
-    -V, --version     Prints version information
-
-OPTIONS:
-    -c, --count <COUNT>      Assigns the max count of log files.
-    -r, --rotate <ROTATE>    Rotates the log file.
+    pipe-logger [OPTIONS] [LOG_PATH]
 
 ARGS:
     <LOG_PATH>    The path that you want to store your logs. [default: logfile.log]
+
+OPTIONS:
+    -c, --count <COUNT>      Assign the max count of log files.
+        --compress           Compress the rotated log files.
+        --err                Re-output logs through stderr.
+    -h, --help               Print help information
+    -r, --rotate <ROTATE>    Rotate the log file.
+    -V, --version            Print version information
 ```
 
 ## Examples
