@@ -1,15 +1,14 @@
-use std::env;
-use std::error::Error;
-use std::io::{self, Write};
-
-use clap::{Arg, Command};
-use terminal_size::terminal_size;
-
-use concat_with::concat_line;
-
-use pipe_logger_lib::*;
+use std::{
+    env,
+    error::Error,
+    io::{self, Write},
+};
 
 use byte_unit::Byte;
+use clap::{Arg, Command};
+use concat_with::concat_line;
+use pipe_logger_lib::*;
+use terminal_size::terminal_size;
 
 const APP_NAME: &str = "Pipe Logger";
 const CARGO_PKG_VERSION: &str = env!("CARGO_PKG_VERSION");

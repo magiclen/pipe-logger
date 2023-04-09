@@ -4,7 +4,6 @@ all: ./target/x86_64-unknown-linux-musl/release/$(EXECUTABLE_NAME)
 
 ./target/x86_64-unknown-linux-musl/release/$(EXECUTABLE_NAME): $(shell find . -type f -iname '*.rs' -o -name 'Cargo.toml' | sed 's/ /\\ /g')
 	LZMA_API_STATIC=1 cargo build --release --target x86_64-unknown-linux-musl
-	strip ./target/x86_64-unknown-linux-musl/release/$(EXECUTABLE_NAME)
 	
 install:
 	$(MAKE)
