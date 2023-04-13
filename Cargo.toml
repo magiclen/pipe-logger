@@ -9,7 +9,6 @@ homepage = "https://magiclen.org/pipe-logger"
 keywords = ["logger", "log", "pipe", "rotation", "logrotate"]
 categories = ["command-line-utilities", "development-tools::debugging"]
 description = "Stores, rotates, compresses process logs."
-readme = "README.md"
 license = "MIT"
 include = ["src/**/*", "Cargo.toml", "README.md", "LICENSE"]
 
