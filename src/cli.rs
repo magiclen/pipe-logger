@@ -45,6 +45,7 @@ pub struct CLIArgs {
 
     #[arg(long)]
     #[arg(default_value = "logfile.log")]
+    #[arg(value_hint = clap::ValueHint::FilePath)]
     #[arg(help = "The path that you want to store your logs")]
     pub log_path: PathBuf,
 }
