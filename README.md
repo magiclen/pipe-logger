@@ -9,24 +9,21 @@ Stores, rotates, compresses process logs.
 
 ```
 EXAMPLES:
-pipe-logger /path/to/out.log                        # Store log into /path/to/out.log
-pipe-logger /path/to/out.log -r 10M                 # The same as above, plus if its size is over than 10MB, it will be rotated and renamed.
-pipe-logger /path/to/out.log -r 10M -c 4            # The same as above, plus the max count of log files is 4. The oldest ones will be removed when the quota is exhausted.
-pipe-logger /path/to/out.log -r 10M -c 4 --compress # The same as above, plus the rotated log files are compressed by xz.
+pipe-logger /path/to/out.log                          # Store log into /path/to/out.log
+pipe-logger /path/to/out.log -r 10M                   # The same as above, plus if its size is over than 10MB, it will be rotated and renamed
+pipe-logger /path/to/out.log -r 10M -c 4              # The same as above, plus the max count of log files is 4. The oldest ones will be removed when the quota is exhausted
+pipe-logger /path/to/out.log -r 10M -c 4 --compress   # The same as above, plus the rotated log files are compressed by xz
 
-USAGE:
-    pipe-logger [OPTIONS] [LOG_PATH]
+Usage: pipe-logger [OPTIONS]
 
-ARGS:
-    <LOG_PATH>    The path that you want to store your logs. [default: logfile.log]
-
-OPTIONS:
-    -c, --count <COUNT>      Assign the max count of log files.
-        --compress           Compress the rotated log files.
-        --err                Re-output logs through stderr.
-    -h, --help               Print help information
-    -r, --rotate <ROTATE>    Rotate the log file.
-    -V, --version            Print version information
+Options:
+  -r, --rotate <ROTATE>      Rotate the log file
+  -c, --count <COUNT>        Assign the max count of log files
+      --compress             Compress the rotated log files
+      --err                  Re-output logs through stderr
+      --log-path <LOG_PATH>  The path that you want to store your logs [default: logfile.log]
+  -h, --help                 Print help
+  -V, --version              Print version
 ```
 
 ## Examples

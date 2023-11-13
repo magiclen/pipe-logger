@@ -1,2 +1,5 @@
-//! # Pipe Logger
-//! Stores, rotates, compresses process logs.
+/*!
+# Pipe Logger
+
+Stores, rotates, compresses process logs.
+*/
