@@ -27,7 +27,4 @@ anyhow = "1"
 
 pipe-logger-lib = "1.1.17"
 
-[dependencies.byte-unit]
-version = "4"
-features = ["std"]
-default-features = false
+byte-unit = "5"

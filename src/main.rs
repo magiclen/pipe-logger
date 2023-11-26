@@ -13,9 +13,9 @@ fn main() -> anyhow::Result<()> {
     let mut builder = PipeLoggerBuilder::new(args.log_path);
 
     if let Some(r) = args.rotate {
-        let byte = Byte::from_str(r)?;
+        let byte = Byte::parse_str(r, true)?;
 
-        builder.set_rotate(Some(RotateMethod::FileSize(byte.get_bytes())));
+        builder.set_rotate(Some(RotateMethod::FileSize(byte.as_u64())));
         builder.set_compress(args.compress);
         builder.set_count(args.count);
     }
