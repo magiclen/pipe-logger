@@ -9,7 +9,7 @@ jobs:
   rustfmt:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v6
       - uses: actions-rust-lang/setup-rust-toolchain@v1
         with:
           toolchain: nightly
@@ -23,7 +23,7 @@ jobs:
         run: |
           sudo apt update
           sudo apt install lzma-dev
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v6
       - uses: actions-rust-lang/setup-rust-toolchain@v1
         with:
           components: clippy
@@ -50,7 +50,7 @@ jobs:
         run: |
           sudo apt update
           sudo apt install lzma-dev musl-tools
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v6
       - uses: actions-rust-lang/setup-rust-toolchain@v1
         with:
           toolchain: ${{ matrix.toolchain }}
@@ -73,7 +73,7 @@ jobs:
     name: Test ${{ matrix.toolchain }} on ${{ matrix.os }} (${{ matrix.features }})
     runs-on: ${{ matrix.os }}
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v6
       - uses: actions-rust-lang/setup-rust-toolchain@v1
         with:
           toolchain: ${{ matrix.toolchain }}
@@ -100,7 +100,7 @@ jobs:
         run: |
           sudo apt update
           sudo apt install lzma-dev musl-tools
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v6
       - uses: actions-rust-lang/setup-rust-toolchain@v1
         with:
           toolchain: ${{ matrix.toolchain }}
@@ -121,7 +121,7 @@ jobs:
     name: Test ${{ matrix.toolchain }} on ${{ matrix.os }} (${{ matrix.features }})
     runs-on: ${{ matrix.os }}
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v6
       - uses: actions-rust-lang/setup-rust-toolchain@v1
         with:
           toolchain: ${{ matrix.toolchain }}
