@@ -40,6 +40,7 @@ fn main() -> anyhow::Result<()> {
         }
 
         logger.write_all(&input.as_bytes()[..c]).unwrap();
+        input.clear();
     }
 
     Ok(())
