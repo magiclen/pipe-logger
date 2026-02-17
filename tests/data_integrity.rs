@@ -41,7 +41,6 @@ fn run_pipe_logger(lines: &[String]) -> String {
 }
 
 #[test]
-#[ignore] // Reproduces data corruption bug magiclen/pipe-logger#4 — remove after fix
 fn sequential_numbers_integrity() {
     let lines: Vec<String> = (1..=500).map(|n| n.to_string()).collect();
     let output = run_pipe_logger(&lines);
@@ -67,7 +66,6 @@ fn sequential_numbers_integrity() {
 }
 
 #[test]
-#[ignore] // Reproduces data corruption bug magiclen/pipe-logger#4 — remove after fix
 fn long_jsonl_lines_integrity() {
     let lines: Vec<String> = (1..=200)
         .map(|n| {
