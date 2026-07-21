@@ -3,15 +3,21 @@ use std::{
     io::Write,
     path::{Path, PathBuf},
     process::{self, Command, Stdio},
+    sync::atomic::{AtomicU64, Ordering},
     time::{SystemTime, UNIX_EPOCH},
 };
+
+// A per-process counter keeps parallel tests from colliding when the clock is coarse.
+static SEQUENCE: AtomicU64 = AtomicU64::new(0);
 
 struct TempDir(PathBuf);
 
 impl TempDir {
     fn new() -> Self {
         let timestamp = SystemTime::now().duration_since(UNIX_EPOCH).unwrap().as_nanos();
-        let path = env::temp_dir().join(format!("pipe-logger-test-{}-{timestamp}", process::id()));
+        let sequence = SEQUENCE.fetch_add(1, Ordering::Relaxed);
+        let path = env::temp_dir()
+            .join(format!("pipe-logger-test-{}-{timestamp}-{sequence}", process::id()));
 
         fs::create_dir(&path).unwrap();
 
