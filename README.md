@@ -9,10 +9,10 @@ Stores, rotates, compresses process logs.
 
 ```
 EXAMPLES:
-pipe-logger /path/to/out.log                          # Store log into /path/to/out.log
-pipe-logger /path/to/out.log -r 10M                   # The same as above, plus if its size is over than 10MB, it will be rotated and renamed
-pipe-logger /path/to/out.log -r 10M -c 4              # The same as above, plus the max count of log files is 4. The oldest ones will be removed when the quota is exhausted
-pipe-logger /path/to/out.log -r 10M -c 4 --compress   # The same as above, plus the rotated log files are compressed by xz
+pipe-logger --log-path /path/to/out.log                          # Store log into /path/to/out.log
+pipe-logger --log-path /path/to/out.log -r 10M                   # The same as above, plus if its size is over than 10MB, it will be rotated and renamed
+pipe-logger --log-path /path/to/out.log -r 10M -c 4              # The same as above, plus the max count of log files is 4. The oldest ones will be removed when the quota is exhausted
+pipe-logger --log-path /path/to/out.log -r 10M -c 4 --compress   # The same as above, plus the rotated log files are compressed by xz
 
 Usage: pipe-logger [OPTIONS]
 
@@ -29,11 +29,11 @@ Options:
 ## Examples
 
 ```bash
-lovable_process | pipe-logger -r 10m -c 5 --compress mylog.txt
+lovable_process | pipe-logger -r 10m -c 5 --compress --log-path mylog.txt
 ```
 
 ```bash
-lovable_process > >(pipe-logger mylog.txt) 2> >(pipe-logger --err error-mylog.txt)
+lovable_process > >(pipe-logger --log-path mylog.txt) 2> >(pipe-logger --err --log-path error-mylog.txt)
 ```
 
 ## License

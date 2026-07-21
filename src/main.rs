@@ -1,11 +1,11 @@
 mod cli;
 
-use std::{io, io::Write};
+use std::io;
 
-use anyhow::{Context, anyhow};
+use anyhow::Context;
 use byte_unit::Byte;
 use cli::*;
-use pipe_logger_lib::{PipeLoggerBuilder, RotateMethod, Tee};
+use pipe_logger_lib::{CompressionMethod, PipeLoggerBuilder, RotateMethod, Tee};
 
 fn main() -> anyhow::Result<()> {
     let args = get_args();
@@ -16,7 +16,7 @@ fn main() -> anyhow::Result<()> {
         let byte = Byte::parse_str(r, true)?;
 
         builder.set_rotate(Some(RotateMethod::FileSize(byte.as_u64())));
-        builder.set_compress(args.compress);
+        builder.set_compression(args.compress.then_some(CompressionMethod::Xz(9)));
         builder.set_count(args.count);
     }
 
@@ -27,20 +27,11 @@ fn main() -> anyhow::Result<()> {
     }
 
     let mut logger = builder.build()?;
+    let mut stdin = io::stdin().lock();
 
-    let mut input = String::new();
+    io::copy(&mut stdin, &mut logger).context("failed to copy stdin to log outputs")?;
 
-    let stdin = io::stdin();
-
-    loop {
-        let c = stdin.read_line(&mut input).with_context(|| anyhow!("stdin"))?;
-
-        if c == 0 {
-            break;
-        }
-
-        logger.write_all(&input.as_bytes()[..c]).unwrap();
-    }
+    logger.finish().context("failed to finish logger")?;
 
     Ok(())
 }

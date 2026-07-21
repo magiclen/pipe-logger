@@ -13,10 +13,10 @@ const AFTER_HELP: &str = "Enjoy it! https://magiclen.org";
 const APP_ABOUT: &str = concat!(
     "Stores, rotates, compresses process logs.\n\nEXAMPLES:\n",
     concat_line!(prefix "pipe-logger ",
-        "/path/to/out.log                          # Store log into /path/to/out.log",
-        "/path/to/out.log -r 10M                   # The same as above, plus if its size is over than 10MB, it will be rotated and renamed",
-        "/path/to/out.log -r 10M -c 4              # The same as above, plus the max count of log files is 4. The oldest ones will be removed when the quota is exhausted",
-        "/path/to/out.log -r 10M -c 4 --compress   # The same as above, plus the rotated log files are compressed by xz",
+        "--log-path /path/to/out.log                          # Store log into /path/to/out.log",
+        "--log-path /path/to/out.log -r 10M                   # The same as above, plus if its size is over than 10MB, it will be rotated and renamed",
+        "--log-path /path/to/out.log -r 10M -c 4              # The same as above, plus the max count of log files is 4. The oldest ones will be removed when the quota is exhausted",
+        "--log-path /path/to/out.log -r 10M -c 4 --compress   # The same as above, plus the rotated log files are compressed by xz",
     )
 );
 
@@ -32,10 +32,12 @@ pub struct CLIArgs {
     pub rotate: Option<String>,
 
     #[arg(short, long)]
+    #[arg(requires = "rotate")]
     #[arg(help = "Assign the max count of log files")]
     pub count: Option<usize>,
 
     #[arg(long)]
+    #[arg(requires = "rotate")]
     #[arg(help = "Compress the rotated log files")]
     pub compress: bool,
 

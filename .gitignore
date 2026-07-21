@@ -1,3 +1,6 @@
+/logfile.log
+/logfile.log.pipe-logger.lock
+
 # Created by https://www.gitignore.io/api/intellij+all
 
 ### Intellij+all ###
