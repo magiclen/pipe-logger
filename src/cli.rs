@@ -33,6 +33,7 @@ pub struct CLIArgs {
 
     #[arg(short, long)]
     #[arg(requires = "rotate")]
+    #[arg(value_parser = clap::builder::RangedU64ValueParser::<usize>::new().range(1..))]
     #[arg(help = "Assign the max count of log files")]
     pub count: Option<usize>,
 
@@ -44,6 +45,11 @@ pub struct CLIArgs {
     #[arg(long)]
     #[arg(help = "Re-output logs through stderr")]
     pub err: bool,
+
+    #[arg(long)]
+    #[arg(conflicts_with = "err")]
+    #[arg(help = "Do not re-output logs; only write them to the log file")]
+    pub quiet: bool,
 
     #[arg(long)]
     #[arg(default_value = "logfile.log")]

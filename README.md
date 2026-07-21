@@ -21,6 +21,7 @@ Options:
   -c, --count <COUNT>        Assign the max count of log files
       --compress             Compress the rotated log files
       --err                  Re-output logs through stderr
+      --quiet                Do not re-output logs; only write them to the log file
       --log-path <LOG_PATH>  The path that you want to store your logs [default: logfile.log]
   -h, --help                 Print help
   -V, --version              Print version
