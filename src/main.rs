@@ -2,7 +2,7 @@ mod cli;
 
 use std::{io, io::Write};
 
-use anyhow::{anyhow, Context};
+use anyhow::{Context, anyhow};
 use byte_unit::Byte;
 use cli::*;
 use pipe_logger_lib::{PipeLoggerBuilder, RotateMethod, Tee};
