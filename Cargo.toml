@@ -1,6 +1,6 @@
 [package]
 name = "pipe-logger"
-version = "2.0.0"
+version = "2.0.1"
 authors = ["Magic Len <len@magiclen.org>"]
 edition = "2024"
 rust-version = "1.89"
@@ -10,7 +10,7 @@ keywords = ["logger", "log", "pipe", "rotation", "logrotate"]
 categories = ["command-line-utilities", "development-tools::debugging"]
 description = "Stores, rotates, compresses process logs."
 license = "MIT"
-include = ["src/**/*", "Cargo.toml", "README.md", "LICENSE"]
+include = ["src/**/*", "Cargo.toml", "Cargo.lock", "README.md", "LICENSE"]
 
 [profile.release]
 lto = true
